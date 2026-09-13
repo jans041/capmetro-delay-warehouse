@@ -1,0 +1,14 @@
+venv/
+venv-wsl/
+__pycache__/
+*.duckdb
+data/raw/
+logs/
+target/
+*.log
+airflow/airflow.cfg
+airflow/webserver_config.py
+airflow/standalone_admin_password.txt
+airflow/airflow.db
+.env
+*.pyc

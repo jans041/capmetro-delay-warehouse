@@ -1,0 +1,6 @@
+duckdb
+requests
+pandas
+dbt-core
+dbt-duckdb
+gtfs-realtime-bindings

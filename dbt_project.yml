@@ -1,0 +1,18 @@
+name: 'transit_warehouse'
+version: '1.0.0'
+config-version: 2
+
+profile: 'transit_warehouse'
+
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  transit_warehouse:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

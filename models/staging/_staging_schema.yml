@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: stg_routes
+    columns:
+      - name: route_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_trips
+    columns:
+      - name: trip_id
+        tests:
+          - unique
+          - not_null
+      - name: route_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_routes')
+                field: route_id
+
+  - name: stg_stops
+    columns:
+      - name: stop_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_stop_times
+    columns:
+      - name: trip_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_trips')
+                field: trip_id
+      - name: stop_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_stops')
+                field: stop_id
+
+  - name: stg_trip_updates
+    columns:
+      - name: trip_id
+        tests:
+          - not_null

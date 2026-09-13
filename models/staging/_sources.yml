@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: gtfs_raw
+    schema: main
+    description: "Raw GTFS static tables loaded directly from CapMetro's zip file"
+    tables:
+      - name: raw_routes
+      - name: raw_trips
+      - name: raw_stop_times
+      - name: raw_stops
+
+  - name: gtfs_rt_raw
+    schema: main
+    description: "Raw GTFS-Realtime tables, appended on every poll of the live feed"
+    tables:
+      - name: raw_trip_updates
+      - name: raw_vehicle_positions
+
+  - name: weather_raw
+    schema: main
+    description: "Raw NWS station observations, polled every 15 minutes"
+    tables:
+      - name: raw_weather
