@@ -11,6 +11,19 @@ actually run, not a one-off script against a clean CSV.
 
 ---
 
+## Key findings
+
+Based on the current rolling window of live-polled trip data: **64.5%** of
+trips run on-time, **20.8%** run early, and **14.7%** run late. The
+weather side of the question isn't answerable with confidence yet, the
+data window hasn't had enough day-to-day weather variety (or any measurable
+rain) to draw real conclusions from, so those charts exist and work, but
+their findings are intentionally withheld until there's enough data behind
+them. Full writeup, including the dashboard screenshot and what would make
+the weather findings trustworthy: [FINDINGS.md](FINDINGS.md).
+
+---
+
 ## Why this project
 
 I live in Texas, and Austin's transit data happens to be public and well
@@ -162,6 +175,9 @@ dashboard: the data window so far hasn't included measurable rainfall, and
 shipping that chart would imply a finding the data can't actually support
 yet. It exists as a ready-to-enable visual, not a live claim.
 
+See [FINDINGS.md](FINDINGS.md) for the full writeup, including a dashboard
+screenshot.
+
 ---
 
 ## Known limitations
@@ -210,6 +226,9 @@ transit-project/
 ├── data/
 │   ├── raw/gtfs_static/              # timestamped raw zip snapshots
 │   └── warehouse.duckdb              # the DuckDB database file
+├── docs/
+│   └── images/
+│       └── dashboard-overview.png    # screenshot used in FINDINGS.md
 ├── models/
 │   ├── staging/
 │   │   ├── _sources.yml              # declares raw_* tables as dbt sources
@@ -238,6 +257,7 @@ transit-project/
 ├── poll_gtfs_realtime.py
 ├── poll_weather.py
 ├── explore_gtfs.py
+├── FINDINGS.md
 └── requirements.txt
 ```
 
