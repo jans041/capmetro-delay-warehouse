@@ -237,11 +237,14 @@ transit-project/
 │   │   ├── stg_trips.sql
 │   │   ├── stg_stops.sql
 │   │   ├── stg_stop_times.sql
+│   │   ├── stg_trip_updates.sql
 │   │   └── stg_weather.sql
 │   └── marts/
 │       ├── fct_trip_stop_events.sql
 │       ├── fct_realtime_delays.sql
 │       └── fct_delays_with_weather.sql
+├── snapshots/
+│   └── routes_snapshot.sql           # SCD Type 2 history of routes
 ├── tests/
 │   └── assert_late_arriving_rate_reasonable.sql
 ├── airflow/
@@ -257,6 +260,8 @@ transit-project/
 ├── poll_gtfs_realtime.py
 ├── poll_weather.py
 ├── explore_gtfs.py
+├── simulate_route_change.py          # demo: fakes a route rename to exercise SCD2
+├── check_route_history.py            # demo: shows the snapshot kept both versions
 ├── FINDINGS.md
 └── requirements.txt
 ```
@@ -265,22 +270,29 @@ transit-project/
 
 ## Running it locally
 
+Airflow doesn't run natively on Windows, so the whole pipeline runs under
+WSL (Ubuntu, Python 3.10). The DAGs work out the project location from their
+own path, so no paths need editing. If your WSL virtualenv isn't at
+`/root/transit-venv`, set `TRANSIT_VENV` to its location.
+
 ```bash
-python -m venv venv
-venv\Scripts\activate          # Windows
+# Inside WSL, from the project directory
+python3 -m venv /root/transit-venv
+source /root/transit-venv/bin/activate
 pip install -r requirements.txt
-pip install dbt-core dbt-duckdb apache-airflow
+pip install "apache-airflow==2.10.4" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.10.4/constraints-3.10.txt"
 
 # One-off static ingestion and exploration
 python ingest_gtfs_static.py
 python explore_gtfs.py
 
 # Build and test the dbt models
+dbt snapshot --profiles-dir .
 dbt run --profiles-dir .
 dbt test --profiles-dir .
 
 # Run the full pipeline continuously
-export AIRFLOW_HOME=./airflow
+export AIRFLOW_HOME=$(pwd)/airflow
 airflow standalone
 ```
 

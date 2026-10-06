@@ -19,6 +19,7 @@ exception here lands in the same alerts.log as every other Stage 7
 failure, rather than inventing a second alerting path.
 """
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import duckdb
 from airflow import DAG
@@ -26,9 +27,8 @@ from airflow.operators.python import PythonOperator
 
 from alerting import alert_on_failure
 
-# --- EDIT THIS PATH FOR YOUR MACHINE -------------------------------------
-WAREHOUSE_PATH = "/mnt/c/Users/ohima/transit-project/data/warehouse.duckdb"
-# -------------------------------------------------------------------------
+# Project root is two levels up from airflow/dags/.
+WAREHOUSE_PATH = str(Path(__file__).resolve().parents[2] / "data" / "warehouse.duckdb")
 
 STALENESS_THRESHOLD_MINUTES = 5
 

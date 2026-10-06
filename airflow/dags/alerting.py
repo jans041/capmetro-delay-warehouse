@@ -23,10 +23,11 @@ regardless of whether something failed outright or just warned.
 """
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 
 # Same file every DAG writes to, so all failures and warnings land in
 # one place.
-ALERT_LOG_PATH = "/mnt/c/Users/ohima/transit-project/airflow/alerts.log"
+ALERT_LOG_PATH = Path(__file__).resolve().parents[1] / "alerts.log"
 
 
 def write_alert(alert: dict):

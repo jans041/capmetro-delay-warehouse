@@ -21,18 +21,21 @@ contention. dbt_test gets only 1 retry with a short delay: a real test
 failure is a data-quality problem, not a transient one, so retrying
 more just delays the alert without fixing anything.
 """
+import os
 from datetime import datetime, timedelta
+from pathlib import Path
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 
 from alerting import alert_on_failure
 
-# --- EDIT THESE TWO PATHS FOR YOUR MACHINE -----------------------------
-PROJECT_DIR = "/mnt/c/Users/ohima/transit-project"
-VENV_PYTHON = "/root/transit-venv/bin/python"
-VENV_DBT = "/root/transit-venv/bin/dbt"
-# -------------------------------------------------------------------------
+# Project root is two levels up from airflow/dags/. Venv location can be
+# overridden with TRANSIT_VENV for machines that keep it elsewhere.
+PROJECT_DIR = Path(__file__).resolve().parents[2]
+VENV_DIR = os.environ.get("TRANSIT_VENV", "/root/transit-venv")
+VENV_PYTHON = f"{VENV_DIR}/bin/python"
+VENV_DBT = f"{VENV_DIR}/bin/dbt"
 
 # Base default_args: every task gets the failure callback. Retries are
 # overridden per-task below, since a network download and a DuckDB write

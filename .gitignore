@@ -12,3 +12,6 @@ airflow/standalone_admin_password.txt
 airflow/airflow.db
 .env
 *.pyc
+airflow/airflow.db-journal
+airflow/airflow-webserver.*
+.user.yml

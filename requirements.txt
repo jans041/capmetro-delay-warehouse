@@ -1,6 +1,6 @@
-duckdb
-requests
-pandas
-dbt-core
-dbt-duckdb
-gtfs-realtime-bindings
+duckdb==1.5.5
+requests==2.34.2
+pandas==2.3.3
+dbt-core==1.12.3
+dbt-duckdb==1.11.0
+gtfs-realtime-bindings==2.2.0

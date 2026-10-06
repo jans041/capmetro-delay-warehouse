@@ -13,17 +13,20 @@ Reuses the same alert_on_failure callback and alerts.log as every other
 DAG in this project -- one place to check regardless of which pipeline
 had the problem.
 """
+import os
 from datetime import datetime, timedelta
+from pathlib import Path
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 
 from alerting import alert_on_failure
 
-# --- EDIT THESE TWO PATHS FOR YOUR MACHINE -----------------------------
-PROJECT_DIR = "/mnt/c/Users/ohima/transit-project"
-VENV_PYTHON = "/root/transit-venv/bin/python"
-# -------------------------------------------------------------------------
+# Project root is two levels up from airflow/dags/. Venv location can be
+# overridden with TRANSIT_VENV for machines that keep it elsewhere.
+PROJECT_DIR = Path(__file__).resolve().parents[2]
+VENV_DIR = os.environ.get("TRANSIT_VENV", "/root/transit-venv")
+VENV_PYTHON = f"{VENV_DIR}/bin/python"
 
 default_args = {
     "owner": "transit-project",

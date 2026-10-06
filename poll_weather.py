@@ -21,13 +21,12 @@ low-volume personal-project use, but polite).
 """
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 
 import duckdb
 import requests
 
-# --- EDIT THIS PATH FOR YOUR MACHINE -------------------------------------
-WAREHOUSE_PATH = "/mnt/c/Users/ohima/transit-project/data/warehouse.duckdb"
-# -------------------------------------------------------------------------
+WAREHOUSE_PATH = str(Path(__file__).resolve().parent / "data" / "warehouse.duckdb")
 
 STATION_ID = "KAUS"  # Austin-Bergstrom International Airport
 OBSERVATIONS_URL = f"https://api.weather.gov/stations/{STATION_ID}/observations/latest"
